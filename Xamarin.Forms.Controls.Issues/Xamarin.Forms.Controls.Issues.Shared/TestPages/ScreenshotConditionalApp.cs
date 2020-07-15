@@ -7,6 +7,7 @@ using NUnit.Framework.Interfaces;
 using Xamarin.Forms.Core.UITests;
 using Xamarin.UITest;
 using Xamarin.UITest.Queries;
+using System.Diagnostics;
 
 #if __IOS__
 using Xamarin.UITest.iOS;
@@ -495,7 +496,14 @@ namespace Xamarin.Forms.Controls
 
 			if (file != null)
 			{
-				TestContext.AddTestAttachment(file.FullName, TestContext.CurrentContext.Test.FullName);
+				try
+				{
+					TestContext.AddTestAttachment(file.FullName, TestContext.CurrentContext.Test.FullName);
+				}
+				catch(Exception exc)
+				{
+					Debug.WriteLine($"Failed to write {file?.FullName} {exc}");
+				}
 			}
 		}
 
